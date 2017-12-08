@@ -136,7 +136,14 @@ gradlew clean build -x test
 
 If you want to provide the google bucket name, application and json credentials
 from gradle rather than setting environment variables you can add them into the
-gradle.properties file within the repo instead.
+gradle.properties file within the repo instead. You will need to add the following
+entries to the file:
+
+```
+google.json.credentials=<your google credentials json>
+google.application.name=<your google application name>
+google.bucket.name=<your google bucket name>
+```
 
 ### Running all the tests
 
