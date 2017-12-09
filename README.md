@@ -1,5 +1,7 @@
 # Simple Google Bucket
 
+[![Build Status](https://travis-ci.org/michaelruocco/simple-google-bucket.svg?branch=master)](https://travis-ci.org/michaelruocco/simple-google-bucket)
+
 This library provides an abstraction layer around code to interact with a
 google bucket. It provides a simple way to perform the following actions
 against a Google Bucket:
