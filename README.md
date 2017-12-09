@@ -1,6 +1,8 @@
 # Simple Google Bucket
 
 [![Build Status](https://travis-ci.org/michaelruocco/simple-google-bucket.svg?branch=master)](https://travis-ci.org/michaelruocco/simple-google-bucket)
+[![Coverage Status](https://coveralls.io/repos/github/michaelruocco/simple-google-bucket/badge.svg?branch=master)](https://coveralls.io/github/michaelruocco/simple-google-bucket?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a9a463bc38234e28acaa7a2b41ef3ee6)](https://www.codacy.com/app/michaelruocco/simple-google-bucket?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/simple-google-bucket&amp;utm_campaign=Badge_Grade)
 
 This library provides an abstraction layer around code to interact with a
 google bucket. It provides a simple way to perform the following actions
