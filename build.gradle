@@ -111,7 +111,7 @@ uploadArchives {
                 description 'Library containing useful classes for interacting and testing with Google buckets'
                 groupId 'com.github.michaelruocco'
                 artifactId 'simple-google-bucket'
-                version project.version
+                version '1.0.0'
                 url 'https://github.com/michaelruocco/simple-google-bucket'
 
                 developers {
