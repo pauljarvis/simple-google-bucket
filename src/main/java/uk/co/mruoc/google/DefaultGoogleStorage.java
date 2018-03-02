@@ -3,11 +3,16 @@ package uk.co.mruoc.google;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.services.storage.Storage;
+import com.google.api.services.storage.model.Objects;
+import com.google.api.services.storage.model.StorageObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DefaultGoogleStorage implements GoogleStorage {
 
@@ -74,6 +79,25 @@ public class DefaultGoogleStorage implements GoogleStorage {
         }
     }
 
+    @Override
+    public List<StorageObject> list(GoogleBucketRequest request) {
+        List<StorageObject> storageObjectsList = new ArrayList<StorageObject>();
+        try {
+            Storage.Objects.List list = storageObjects.list(request.getBucketName());
+            Objects objects;
+            do {
+                objects = list.execute();
+                for (StorageObject o : objects.getItems()) {
+                    storageObjectsList.add(o);
+                }
+                list.setPageToken(objects.getNextPageToken());
+            } while (null != objects.getNextPageToken());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return storageObjectsList;
+    }
+
     private Storage.Objects.Get toGet(ObjectInfo info) throws IOException {
         return storageObjects.get(info.getBucketName(), info.getObjectName());
     }
@@ -94,17 +118,13 @@ public class DefaultGoogleStorage implements GoogleStorage {
     }
 
     private void logDownload(GoogleBucketRequest request) {
-        String message = String.format("downloading object %s from bucket %s to local file %s",
-                request.getObjectName(),
-                request.getBucketName(),
+        String message = String.format("downloading object %s from bucket %s to local file %s", request.getObjectName(), request.getBucketName(),
                 request.getFile().getAbsolutePath());
         LOGGER.info(message);
     }
 
     private void logUpload(GoogleBucketRequest request) {
-        String message = String.format("uploading local file %s to bucket %s as object %s",
-                request.getFile().getAbsolutePath(),
-                request.getBucketName(),
+        String message = String.format("uploading local file %s to bucket %s as object %s", request.getFile().getAbsolutePath(), request.getBucketName(),
                 request.getObjectName());
         LOGGER.info(message);
     }
