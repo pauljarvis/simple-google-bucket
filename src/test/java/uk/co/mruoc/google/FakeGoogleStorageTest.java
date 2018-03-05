@@ -60,4 +60,13 @@ public class FakeGoogleStorageTest {
         assertThat(storage.getLastDownloadRequest()).isEqualTo(request);
     }
 
+    @Test
+    public void shouldReturnLastListRequest() {
+        GoogleBucketRequest request = new StubbedGoogleBucketRequest();
+
+        storage.list(request);
+
+        assertThat(storage.getLastListRequest()).isEqualTo(request);
+    }
+
 }

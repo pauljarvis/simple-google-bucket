@@ -3,11 +3,16 @@ package uk.co.mruoc.google;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.services.storage.Storage;
+import com.google.api.services.storage.model.Objects;
+import com.google.api.services.storage.model.StorageObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DefaultGoogleStorage implements GoogleStorage {
 
@@ -72,6 +77,25 @@ public class DefaultGoogleStorage implements GoogleStorage {
         } catch (IOException e) {
             throw new GoogleStorageException(e);
         }
+    }
+
+    @Override
+    public List<StorageObject> list(GoogleBucketRequest request) {
+        List<StorageObject> storageObjectsList = new ArrayList<StorageObject>();
+        try {
+            Storage.Objects.List list = storageObjects.list(request.getBucketName());
+            Objects objects;
+            do {
+                objects = list.execute();
+                for (StorageObject o : objects.getItems()) {
+                    storageObjectsList.add(o);
+                }
+                list.setPageToken(objects.getNextPageToken());
+            } while (null != objects.getNextPageToken());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return storageObjectsList;
     }
 
     private Storage.Objects.Get toGet(ObjectInfo info) throws IOException {
