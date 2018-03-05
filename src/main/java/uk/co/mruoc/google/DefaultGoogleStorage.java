@@ -118,13 +118,17 @@ public class DefaultGoogleStorage implements GoogleStorage {
     }
 
     private void logDownload(GoogleBucketRequest request) {
-        String message = String.format("downloading object %s from bucket %s to local file %s", request.getObjectName(), request.getBucketName(),
+        String message = String.format("downloading object %s from bucket %s to local file %s",
+		        request.getObjectName(),
+				request.getBucketName(),
                 request.getFile().getAbsolutePath());
         LOGGER.info(message);
     }
 
     private void logUpload(GoogleBucketRequest request) {
-        String message = String.format("uploading local file %s to bucket %s as object %s", request.getFile().getAbsolutePath(), request.getBucketName(),
+        String message = String.format("uploading local file %s to bucket %s as object %s",
+		        request.getFile().getAbsolutePath(),
+		        request.getBucketName(),
                 request.getObjectName());
         LOGGER.info(message);
     }
